@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { AuthButtonServer } from './auth-button-server'
 import { cn } from '../lib/utils'
+import { GithubIcon } from 'lucide-react'
 
 function MainNav ({
   className,
@@ -19,15 +19,15 @@ function MainNav ({
           >
             Colab-AI
           </Link>
-
-          {/* <Link href='/' className={cn(buttonVariants({ size: 'sm' }), 'h-7 px-2')}>
-            <HomeIcon className='w-4 h-4' />
-          </Link> */}
-
         </nav>
-        <div className="ml-auto flex items-center space-x-4">
-          <AuthButtonServer />
-        </div>
+        <a
+          target='_blank'
+          href='https://github.com/felipetodev/wanderlust'
+          className='ml-auto'
+          rel="noreferrer"
+        >
+          <GithubIcon className="w-5 h-5" />
+        </a>
       </div>
     </div>
   )
