@@ -13,6 +13,7 @@ import { MemoizedReactMarkdown } from './ui/markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import Maps from './maps'
+import ChatInput from './chat-input'
 
 function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -146,76 +147,58 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
                 className='absolute bottom-0 w-full flex flex-col gap-y-8'
                 animate={messages.length > 0 ? { top: 0 } : { bottom: 0 }}
               >
-                <AnimatePresence>
-                  {messages.length === 0
-                    ? (
+                {messages.length === 0
+                  ? (
+                    <AnimatePresence>
+                      <motion.div className='flex items-center' exit={{ opacity: 0 }}>
+                        <span className='h-6 w-6 mr-2' />
+                        <h1 className="text-3xl font-semibold">
+                          Where would you like to go?
+                        </h1>
+                      </motion.div>
+                    </AnimatePresence>
+                    )
+                  : (
+                    <>
                       <AnimatePresence>
-                        <motion.div className='flex items-center' exit={{ opacity: 0 }}>
-                          <span className='h-6 w-6 mr-2' />
-                          <h1 className="text-3xl font-semibold">
-                            Where would you like to go?
-                          </h1>
-                        </motion.div>
+                        {messages?.map((message, i) => (
+                          <motion.div
+                            key={message.id}
+                            className='flex'
+                            initial={{ opacity: 0 }}
+                            animate={i < messages.length - 1 ? { opacity: 0.5 } : { opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            <span className='h-6 w-6 mr-2 mt-1.5'>
+                              {message.role === 'assistant' && (
+                                <CompassIcon />
+                              )}
+                            </span>
+                            <div className="flex-1 space-y-2 overflow-hidden">
+                              <MemoizedReactMarkdown
+                                className="text-2xl font-semibold prose break-words prose-p:leading-normal prose-pre:p-0 mx-auto"
+                                components={{
+                                  p ({ children }) {
+                                    return <p className="mb-2 last:mb-0">{children}</p>
+                                  }
+                                }}
+                                remarkPlugins={[remarkGfm, remarkMath]}
+                              >
+                                {message.content}
+                              </MemoizedReactMarkdown>
+                            </div>
+                          </motion.div>
+                        ))}
                       </AnimatePresence>
-                      )
-                    : (
-                      <>
-                        <AnimatePresence>
-                          {messages?.map((message, i) => (
-                            <motion.div
-                              key={message.id}
-                              className='flex'
-                              initial={{ opacity: 0 }}
-                              animate={i < messages.length - 1 ? { opacity: 0.5 } : { opacity: 1 }}
-                              transition={{ delay: 0.3 }}
-                            >
-                              <span className='h-6 w-6 mr-2 mt-1.5'>
-                                {message.role === 'assistant' && (
-                                  <CompassIcon />
-                                )}
-                              </span>
-                              <div className="flex-1 space-y-2 overflow-hidden">
-                                <MemoizedReactMarkdown
-                                  className="text-2xl font-semibold prose break-words prose-p:leading-normal prose-pre:p-0 mx-auto"
-                                  components={{
-                                    p ({ children }) {
-                                      return <p className="mb-2 last:mb-0">{children}</p>
-                                    }
-                                  }}
-                                  remarkPlugins={[remarkGfm, remarkMath]}
-                                >
-                                  {message.content}
-                                </MemoizedReactMarkdown>
-                              </div>
-                            </motion.div>
-                          ))}
-                        </AnimatePresence>
-                        <div className='py-10' />
-                      </>
-                      )}
-                </AnimatePresence>
+                      <div className='py-10' />
+                    </>
+                    )}
               </motion.div>
             </div>
-            <motion.div
-              animate={messages.length > 0 ? { height: 'auto' } : {}}
-              className='relative h-full'
-            >
-              <motion.div
-                className='absolute flex items-end w-full'
-                animate={messages.length > 0 ? {} : { top: 0 }}
-              >
-                <span className='w-6 mr-2' />
-                <input
-                  ref={inputRef}
-                  type="text"
-                  name="initial"
-                  autoCapitalize="off"
-                  autoComplete="off"
-                  placeholder="Start typing or upload a file..."
-                  className="mt-auto w-full text-2xl pt-2 outline-none font-semibold"
-                />
-              </motion.div>
-            </motion.div>
+            <ChatInput
+              messages={messages}
+              inputRef={inputRef}
+            />
           </div>
         </form>
         <Maps
