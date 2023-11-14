@@ -11,7 +11,7 @@ type Props = {
 
 function ChatMessages ({ messages }: Props) {
   return (
-    <div className='relative h-[calc(100%-40px)] overflow-y-auto border border-red-500'>
+    <div className='relative h-[calc(100%-40px)] overflow-y-auto'>
       <motion.div
         className='absolute bottom-0 w-full flex flex-col gap-y-8'
         animate={messages.length > 0 ? { top: 0 } : { bottom: 0 }}
