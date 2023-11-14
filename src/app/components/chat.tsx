@@ -138,7 +138,7 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyBm6z49otVXeHModcvUA6AoAYKErVCXPCI'
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''
   })
 
   return (
