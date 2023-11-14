@@ -1,6 +1,6 @@
 import { type Run } from 'openai/resources/beta/threads/runs/runs.mjs'
 
-type Role = 'user' | 'assistant' | 'update_map' | 'add_marker'
+type Role = 'user' | 'assistant' | 'update_map' | 'add_marker' | 'loader'
 
 export type Message = {
   id: string

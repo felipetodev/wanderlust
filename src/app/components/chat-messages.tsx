@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { CompassIcon, GlobeIcon, MapPinIcon } from 'lucide-react'
+import { CompassIcon, GlobeIcon, LoaderIcon, MapPinIcon } from 'lucide-react'
 import { MemoizedReactMarkdown } from './ui/markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -49,6 +49,9 @@ function ChatMessages ({ messages }: Props) {
                         )}
                         {message.role === 'assistant' && (
                           <CompassIcon />
+                        )}
+                        {message.role === 'loader' && (
+                          <LoaderIcon className='animate-spin' />
                         )}
                       </span>
                       <div className="flex-1 space-y-2 overflow-hidden">
