@@ -11,6 +11,7 @@ import runAssistant from '../actions/run-assistant'
 import getRun from '../actions/get-run'
 import submitToolOutputs from '../actions/tool-outputs'
 import { type Marker, type Map, type Message } from '../lib/types'
+import WelcomeHeading from './welcome-heading'
 
 function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -141,41 +142,32 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
   }
 
   return (
-    <section className="h-full px-8 py-12">
-      <div className="grid grid-cols-2 h-full">
-        <form className="relative" onSubmit={handleSend}>
-          <div className="absolute flex flex-col w-full h-full">
-            <div className='relative h-[calc(100%-40px)] overflow-y-auto'>
-              <motion.div
-                className='absolute bottom-0 w-full flex flex-col gap-y-8'
-                animate={messages.length > 0 ? { top: 0 } : { bottom: 0 }}
-              >
+    <div className="grid grid-cols-2 h-full px-8 py-12">
+      <form className='relative' onSubmit={handleSend}>
+        <div className="absolute flex flex-col w-full h-full">
+          <div className='relative h-[calc(100%-40px)] overflow-y-auto'>
+            <motion.div
+              className='absolute bottom-0 w-full flex flex-col gap-y-8'
+              animate={messages.length > 0 ? { top: 0 } : { bottom: 0 }}
+            >
+              <AnimatePresence>
                 {messages.length === 0
-                  ? (
-                    <AnimatePresence>
-                      <motion.div className='flex items-center' exit={{ opacity: 0 }}>
-                        <span className='h-6 w-6 mr-2' />
-                        <h1 className="text-3xl font-semibold">
-                          Where would you like to go?
-                        </h1>
-                      </motion.div>
-                    </AnimatePresence>
-                    )
+                  ? <WelcomeHeading />
                   : <ChatMessages messages={messages} />}
-              </motion.div>
-            </div>
-            <ChatInput
-              messages={messages}
-              inputRef={inputRef}
-            />
+              </AnimatePresence>
+            </motion.div>
           </div>
-        </form>
-        <Maps
-          mapCenter={mapCenter}
-          markerPlaces={markerPlaces}
-        />
-      </div >
-    </section >
+          <ChatInput
+            messages={messages}
+            inputRef={inputRef}
+          />
+        </div>
+      </form>
+      <Maps
+        mapCenter={mapCenter}
+        markerPlaces={markerPlaces}
+      />
+    </div>
   )
 }
 
