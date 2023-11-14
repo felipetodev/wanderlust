@@ -1,9 +1,11 @@
 import { type Run } from 'openai/resources/beta/threads/runs/runs.mjs'
 
+type Role = 'user' | 'assistant' | 'update_map' | 'add_marker'
+
 export type Message = {
   id: string
   content: string
-  role: 'user' | 'assistant'
+  role: Role
 }
 
 export type RunAction = {

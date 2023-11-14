@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import Maps from './maps'
 import ChatInput from './chat-input'
 import ChatMessages from './chat-messages'
@@ -11,7 +10,6 @@ import runAssistant from '../actions/run-assistant'
 import getRun from '../actions/get-run'
 import submitToolOutputs from '../actions/tool-outputs'
 import { type Marker, type Map, type Message } from '../lib/types'
-import WelcomeHeading from './welcome-heading'
 
 function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -64,7 +62,7 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
         setMessages(prev => [...prev, {
           id,
           content: 'Updating map...',
-          role: 'assistant'
+          role: 'update_map'
         }])
 
         setTimeout(() => {
@@ -80,7 +78,7 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
         setMessages(prev => [...prev, {
           id,
           content: 'Annotating map...',
-          role: 'assistant'
+          role: 'add_marker'
         }])
       }
 
@@ -145,18 +143,7 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
     <div className="grid grid-cols-2 h-full px-8 py-12">
       <form className='relative' onSubmit={handleSend}>
         <div className="absolute flex flex-col w-full h-full">
-          <div className='relative h-[calc(100%-40px)] overflow-y-auto'>
-            <motion.div
-              className='absolute bottom-0 w-full flex flex-col gap-y-8'
-              animate={messages.length > 0 ? { top: 0 } : { bottom: 0 }}
-            >
-              <AnimatePresence>
-                {messages.length === 0
-                  ? <WelcomeHeading />
-                  : <ChatMessages messages={messages} />}
-              </AnimatePresence>
-            </motion.div>
-          </div>
+          <ChatMessages messages={messages} />
           <ChatInput
             messages={messages}
             inputRef={inputRef}
