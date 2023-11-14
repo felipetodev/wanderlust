@@ -2,18 +2,15 @@
 
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Maps from './maps'
+import ChatInput from './chat-input'
+import ChatMessages from './chat-messages'
 import { nanoid } from '../lib/utils'
-import { CompassIcon } from 'lucide-react'
 import addMessage from '../actions/add-message'
 import runAssistant from '../actions/run-assistant'
 import getRun from '../actions/get-run'
-import { type Marker, type Map, type Message } from '../lib/types'
 import submitToolOutputs from '../actions/tool-outputs'
-import { MemoizedReactMarkdown } from './ui/markdown'
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
-import Maps from './maps'
-import ChatInput from './chat-input'
+import { type Marker, type Map, type Message } from '../lib/types'
 
 function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -158,41 +155,7 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
                       </motion.div>
                     </AnimatePresence>
                     )
-                  : (
-                    <>
-                      <AnimatePresence>
-                        {messages?.map((message, i) => (
-                          <motion.div
-                            key={message.id}
-                            className='flex'
-                            initial={{ opacity: 0 }}
-                            animate={i < messages.length - 1 ? { opacity: 0.5 } : { opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                          >
-                            <span className='h-6 w-6 mr-2 mt-1.5'>
-                              {message.role === 'assistant' && (
-                                <CompassIcon />
-                              )}
-                            </span>
-                            <div className="flex-1 space-y-2 overflow-hidden">
-                              <MemoizedReactMarkdown
-                                className="text-2xl font-semibold prose break-words prose-p:leading-normal prose-pre:p-0 mx-auto"
-                                components={{
-                                  p ({ children }) {
-                                    return <p className="mb-2 last:mb-0">{children}</p>
-                                  }
-                                }}
-                                remarkPlugins={[remarkGfm, remarkMath]}
-                              >
-                                {message.content}
-                              </MemoizedReactMarkdown>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </AnimatePresence>
-                      <div className='py-10' />
-                    </>
-                    )}
+                  : <ChatMessages messages={messages} />}
               </motion.div>
             </div>
             <ChatInput
