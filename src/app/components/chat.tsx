@@ -73,19 +73,25 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
       }
 
       const markerToolCalls = toolCalls.filter((tc: any) => tc.function.name === 'add_marker')
-      const markers = markerToolCalls.map((tc: any) => JSON.parse(tc.function.arguments))
 
       const id = nanoid()
-      setMessages(prev => [...prev, {
-        id,
-        content: 'Annotating map...',
-        role: 'assistant'
-      }])
+      if (markerToolCalls.length > 0) {
+        setMessages(prev => [...prev, {
+          id,
+          content: 'Annotating map...',
+          role: 'assistant'
+        }])
+      }
 
-      setTimeout(() => {
-        setMessages(prev => prev.map((msg) => msg.id === id ? { ...msg, content: 'Annotated map' } : msg))
-        setMarkerPlaces(markers)
-      }, 1000)
+      const markers = markerToolCalls.map((tc: any) => JSON.parse(tc.function.arguments))
+
+      if (markers.length > 0) {
+        setTimeout(() => {
+          setMessages(prev => prev.map((msg) => msg.id === id ? { ...msg, content: 'Annotated map' } : msg))
+          setMarkerPlaces(markers)
+          setMapCenter(prev => ({ ...prev, zoom: 11 }))
+        }, 1000)
+      }
 
       if (toolCalls.length > 0) {
         await submitToolOutputs({ runId: runRes.id, toolCalls })
