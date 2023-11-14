@@ -10,3 +10,15 @@ export type RunAction = {
   run: Run | null
   error: string | null
 }
+
+export type Map = {
+  lat: number
+  lng: number
+  zoom: number
+}
+
+export type Marker = {
+  lat: number
+  lng: number
+  label: string
+}

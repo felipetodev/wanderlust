@@ -2,23 +2,23 @@
 
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api'
-import { containerStyle, nanoid } from '../lib/utils'
+import { nanoid } from '../lib/utils'
 import { CompassIcon } from 'lucide-react'
 import addMessage from '../actions/add-message'
 import runAssistant from '../actions/run-assistant'
 import getRun from '../actions/get-run'
-import { type Message } from '../lib/types'
+import { type Marker, type Map, type Message } from '../lib/types'
 import submitToolOutputs from '../actions/tool-outputs'
 import { MemoizedReactMarkdown } from './ui/markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import Maps from './maps'
 
 function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [messages, setMessages] = useState<Message[]>(initialMessages ?? [])
-  const [mapCenter, setMapCenter] = useState({ lat: -33.4372, lng: -70.6506, zoom: 10 })
-  const [markerPlaces, setMarkerPlaces] = useState<Array<{ lat: number, lng: number, label: string }>>([])
+  const [mapCenter, setMapCenter] = useState<Map>({ lat: -33.4372, lng: -70.6506, zoom: 10 })
+  const [markerPlaces, setMarkerPlaces] = useState<Marker[]>([])
 
   const handleSend = async (e: any) => {
     e.preventDefault()
@@ -136,11 +136,6 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
     setMessages((prev): Message[] => [...prev, message])
   }
 
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''
-  })
-
   return (
     <section className="h-full px-8 py-12">
       <div className="grid grid-cols-2 h-full">
@@ -156,8 +151,7 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
                     ? (
                       <AnimatePresence>
                         <motion.div className='flex items-center' exit={{ opacity: 0 }}>
-                          <span className='h-6 w-6 mr-2'>
-                          </span>
+                          <span className='h-6 w-6 mr-2' />
                           <h1 className="text-3xl font-semibold">
                             Where would you like to go?
                           </h1>
@@ -224,23 +218,10 @@ function Chat ({ initialMessages }: { initialMessages?: Message[] }) {
             </motion.div>
           </div>
         </form>
-        <div className="rounded-2xl overflow-hidden">
-          {isLoaded && (
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={{ lng: mapCenter.lng, lat: mapCenter.lat }}
-              zoom={mapCenter.zoom}
-            >
-              {markerPlaces?.map((place, i) => (
-                <MarkerF
-                  key={i}
-                  // label={place?.label ?? undefined}
-                  position={{ lng: place.lng, lat: place.lat }}
-                />
-              ))}
-            </GoogleMap>
-          )}
-        </div>
+        <Maps
+          mapCenter={mapCenter}
+          markerPlaces={markerPlaces}
+        />
       </div >
     </section >
   )
