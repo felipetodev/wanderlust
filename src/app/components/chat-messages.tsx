@@ -57,7 +57,7 @@ function ChatMessages ({ messages, containerRef }: Props) {
                       </span>
                       <div className="flex-1 space-y-2 overflow-hidden">
                         <MemoizedReactMarkdown
-                          className="text-2xl font-semibold prose break-words prose-p:leading-normal prose-pre:p-0 mx-auto"
+                          className="sm:text-2xl font-semibold prose break-words prose-p:leading-normal prose-pre:p-0 mx-auto"
                           components={{
                             p ({ children }) {
                               return <p className="mb-2 last:mb-0">{children}</p>
@@ -71,7 +71,7 @@ function ChatMessages ({ messages, containerRef }: Props) {
                     </motion.div>
                   ))}
                 </AnimatePresence>
-                <div className='py-10' />
+                <div className='py-2 sm:py-10' />
               </>
               )}
         </AnimatePresence>

@@ -22,7 +22,7 @@ function MainNav ({
           </a>
         </nav>
         <a
-          className="ml-auto flex max-w-fit items-center justify-center space-x-2 font-semibold rounded-full border border-gray-300 px-3 py-1.5 text-sm transition-colors hover:bg-gray-100 hover:text-gray-500"
+          className="ml-auto flex max-w-fit items-center justify-center space-x-2 font-semibold rounded-full border border-gray-300 px-3 py-1.5 text-xs sm:text-sm transition-colors hover:bg-gray-100 hover:text-gray-500"
           href="https://github.com/felipetodev/wanderlust"
           target="_blank"
           rel="noopener noreferrer"

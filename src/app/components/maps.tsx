@@ -14,7 +14,7 @@ function Maps ({ mapCenter, markerPlaces }: Props) {
   })
 
   return (
-    <div className="rounded-2xl overflow-hidden">
+    <div className="rounded-2xl overflow-hidden order-first sm:order-none">
       {isLoaded && (
         <GoogleMap
           mapContainerStyle={containerStyle}
