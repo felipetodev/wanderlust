@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { cn } from '../lib/utils'
 import { GithubIcon } from 'lucide-react'
 
@@ -13,20 +12,23 @@ function MainNav ({
           className={cn('flex items-center space-x-2 lg:space-x-2', className)}
           {...props}
         >
-          <Link
-            className="text-lg font-semibold transition-colors mr-2"
-            href="/"
+          <a
+            className="text-lg font-semibold transition-colors mr-2 hover:text-gray-500"
+            href="https://www.colab-ai.com"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Colab-AI
-          </Link>
+          </a>
         </nav>
         <a
-          target='_blank'
-          href='https://github.com/felipetodev/wanderlust'
-          className='ml-auto'
-          rel="noreferrer"
+          className="ml-auto flex max-w-fit items-center justify-center space-x-2 font-semibold rounded-full border border-gray-300 px-3 py-1.5 text-sm transition-colors hover:bg-gray-100 hover:text-gray-500"
+          href="https://github.com/felipetodev/wanderlust"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <GithubIcon className="w-5 h-5" />
+          <GithubIcon className='w-5 h-5' />
+          <p>Star on GitHub</p>
         </a>
       </div>
     </div>
