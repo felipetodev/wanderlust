@@ -9,6 +9,7 @@ https://github.com/felipetodev/wanderlust/assets/69825873/822b1a62-69f5-4522-8a7
 
 - Next.js [14](https://nextjs.org/blog/next-14)
 - OpenAI [Assistants API](https://platform.openai.com/docs/assistants/overview)
+- Google [Maps API](https://developers.google.com/maps/documentation/javascript)
 - [Framer Motion](https://www.framer.com/motion/) for smooth animations
 - TailwindCSS
 
