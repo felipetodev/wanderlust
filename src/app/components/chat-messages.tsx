@@ -6,12 +6,13 @@ import remarkMath from 'remark-math'
 import { type Message } from '../lib/types'
 
 type Props = {
+  containerRef: React.RefObject<HTMLDivElement>
   messages: Message[]
 }
 
-function ChatMessages ({ messages }: Props) {
+function ChatMessages ({ messages, containerRef }: Props) {
   return (
-    <div className='relative h-[calc(100%-40px)] overflow-y-auto'>
+    <div ref={containerRef} className='relative h-[calc(100%-40px)] overflow-y-auto'>
       <motion.div
         className='absolute bottom-0 w-full flex flex-col gap-y-8'
         animate={messages.length > 0 ? { top: 0 } : { bottom: 0 }}
