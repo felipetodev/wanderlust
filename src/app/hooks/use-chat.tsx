@@ -42,6 +42,19 @@ export default function useChat ({ initialMessages, scrollToBottom }: Props) {
       if (runErr ?? !run) throw new Error('Run not found')
 
       let runRes = run
+      let isFirst = true
+
+      const initialLoadId = nanoid()
+
+      if (isFirst) {
+        setMessages(prev => [...prev, {
+          id: initialLoadId,
+          content: 'Loading...',
+          role: 'loader'
+        }])
+        scrollToBottom()
+      }
+
       while (runRes.status === 'queued' || runRes.status === 'in_progress') {
         // poll for run status
         await new Promise((resolve) => setTimeout(resolve, 300))
@@ -50,11 +63,15 @@ export default function useChat ({ initialMessages, scrollToBottom }: Props) {
 
         if (runRetrieve == null) throw new Error('Run not found')
 
+        isFirst = false
         runRes = runRetrieve
       }
 
       // load functions triggers for the run (if exists)
       if (runRes.status === 'requires_action') {
+        // remove loader message in first run
+        isFirst = true
+        setMessages(prev => prev.filter((msg) => msg.id !== initialLoadId))
         const toolCalls = runRes.required_action?.submit_tool_outputs.tool_calls
 
         if (!toolCalls) throw new Error('Tool calls not found')
@@ -106,6 +123,11 @@ export default function useChat ({ initialMessages, scrollToBottom }: Props) {
         }
       }
 
+      // remove loader if doesn't enter in requires_action
+      if (!isFirst) {
+        setMessages(prev => prev.filter((msg) => msg.id !== initialLoadId))
+      }
+
       // load assistant message for the run
       const id = nanoid()
       setMessages(prev => [...prev, {
@@ -146,6 +168,7 @@ export default function useChat ({ initialMessages, scrollToBottom }: Props) {
         result += new TextDecoder('utf-8').decode(value)
       }
 
+      // remove loader message
       setMessages(prev => prev.filter((msg) => msg.id !== id))
 
       const message: Message = {
