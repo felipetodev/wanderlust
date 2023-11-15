@@ -3,7 +3,7 @@
 Example shown at OpenAI DevDay (Assistants) 🗺
 
 ## Demo
-<video src='./public/wanderlust-demo.mp4' />
+https://wanderlust-v0.vercel.app/wanderlust-demo.mp4
 
 ## Tech Stack
 
