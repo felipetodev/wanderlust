@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { CompassIcon, GlobeIcon, LoaderIcon, MapPinIcon } from 'lucide-react'
+import { CompassIcon, FileIcon, FileUpIcon, GlobeIcon, LoaderIcon, MapPinIcon, PlaneIcon, SearchIcon } from 'lucide-react'
 import { MemoizedReactMarkdown } from './ui/markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -52,6 +52,18 @@ function ChatMessages ({ messages, containerRef }: Props) {
                         )}
                         {message.role === 'loader' && (
                           <LoaderIcon className='animate-spin' />
+                        )}
+                        {message.role === 'file-up' && (
+                          <FileUpIcon />
+                        )}
+                        {message.role === 'file' && (
+                          <FileIcon />
+                        )}
+                        {message.role === 'search' && (
+                          <SearchIcon />
+                        )}
+                        {(message.role === 'plane-takeoff' || message.role === 'plane-landing') && (
+                          <PlaneIcon />
                         )}
                       </span>
                       <div className="flex-1 space-y-2 overflow-hidden">
