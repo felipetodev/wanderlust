@@ -1,6 +1,6 @@
 # [Wanderlust-v0](https://wanderlust-v0.vercel.app/)
 
-Example shown at OpenAI DevDay (Assistants) 🗺
+Example shown at [OpenAI DevDay](https://www.youtube.com/live/U9mJuUkhUzk?si=39e6H5uSLvUUCDoh&t=2029) (Assistants) 🗺
 
 ## Demo
 https://github.com/felipetodev/wanderlust/assets/69825873/822b1a62-69f5-4522-8a71-aef1d2a102b6
