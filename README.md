@@ -15,5 +15,5 @@ https://github.com/felipetodev/wanderlust/assets/69825873/822b1a62-69f5-4522-8a7
 
 ## Future Tasks
 
-- [ ] Upload files like airplane ticket and display location information along with your flight details.
+- [x] Upload files like airplane ticket and display location information along with your flight details.
 - [ ] Run code interpreter.

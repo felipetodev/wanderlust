@@ -161,7 +161,7 @@ export default function useChat ({ initialMessages, scrollToBottom }: Props) {
         if (flightIndoToolCall) {
           const flightInfo = JSON.parse(flightIndoToolCall.function.arguments)
           setFlightInfo(flightInfo)
-          addMessageToChat('Displayed flight information', 'assistant', displayId)
+          setMessages(prev => prev.map((msg) => msg.id === displayId ? { ...msg, content: 'Displayed flight information' } : msg))
         }
 
         if (toolCalls.length > 0) {
