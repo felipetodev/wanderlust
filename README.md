@@ -4,6 +4,10 @@ Example shown at [OpenAI DevDay](https://www.youtube.com/live/U9mJuUkhUzk?si=39e
 
 ## Demo
 https://github.com/felipetodev/wanderlust/assets/69825873/822b1a62-69f5-4522-8a71-aef1d2a102b6
+## Retrieval Demo
+https://github.com/felipetodev/wanderlust/assets/69825873/257a8e5f-1dcd-4677-8ef1-22947d84bb2e
+
+
 
 ## Tech Stack
 
